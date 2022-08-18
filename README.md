@@ -4,6 +4,10 @@ Salamander is a type-safe wrapper for [Cloud Firestore](https://firebase.google.
 This means that gets, sets, and updates use [TypeScript generics](https://www.typescriptlang.org/docs/handbook/2/generics.html)
 to give you a bit more assurance that you're performing the correct operation.
 
+```
+npm install --save @fleker/salamander
+```
+
 ## Examples
 
 ### Get
