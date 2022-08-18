@@ -157,7 +157,7 @@ export class SalamanderTxn {
 
   async getAll<T>(...documentRefsOrReadOptions: (FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData> | FirebaseFirestore.ReadOptions)[]) {
     const docs = await this.txn.getAll(...documentRefsOrReadOptions)
-    return docs.map((doc: FirebaseFirestore.DocumentSnapshot<T>) => new SalamanderSnapshot(doc))
+    return docs.map((doc: FirebaseFirestore.DocumentSnapshot<T>) => new SalamanderSnapshot<T>(doc))
   }
 
   async set<T>(ref: FirebaseFirestore.DocumentReference, data: T): Promise<unknown> {
