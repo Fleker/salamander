@@ -13,12 +13,12 @@ class Salamander {
     this.db = firestore
   }
 
-  collection(collectionName: string) {
-    return new SalamanderCollection(this.db.collection(collectionName))
-  }
-
   get _raw() {
     return this.db
+  }
+
+  collection(collectionName: string) {
+    return new SalamanderCollection(this.db.collection(collectionName))
   }
 
   async runTransaction(updateFunction: (transaction: SalamanderTxn) => Promise<any>) {
@@ -138,13 +138,13 @@ export class SalamanderTxn {
     return this.create(data)
   }
 
-  async delete(ref: FirebaseFirestore.DocumentReference) {
-    return this.txn.delete(ref)
+  async delete(ref: SalamanderRef) {
+    return this.txn.delete(ref._raw)
   }
 
-  async get<T>(ref: FirebaseFirestore.DocumentReference): Promise<SalamanderSnapshot<T>> {
-    const doc = await this.txn.get(ref)
-    return new SalamanderSnapshot(doc)
+  async get<T>(ref: SalamanderRef): Promise<SalamanderSnapshot<T>> {
+    const doc = await this.txn.get(ref._raw)
+    return new SalamanderSnapshot<T>(doc)
   }
 
   async getAll<T>(...documentRefsOrReadOptions: (FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData> | FirebaseFirestore.ReadOptions)[]) {
@@ -152,12 +152,12 @@ export class SalamanderTxn {
     return docs.map((doc: FirebaseFirestore.DocumentSnapshot<T>) => new SalamanderSnapshot<T>(doc))
   }
 
-  async set<T>(ref: FirebaseFirestore.DocumentReference, data: T): Promise<unknown> {
-    return await this.txn.set(ref, data)
+  async set<T>(ref: SalamanderRef, data: T): Promise<unknown> {
+    return await this.txn.set(ref._raw, data)
   }
 
-  async update<T>(ref: FirebaseFirestore.DocumentReference, data: Partial<T>): Promise<unknown> {
-    return await this.txn.update(ref, data)
+  async update<T>(ref: SalamanderRef, data: Partial<T>): Promise<unknown> {
+    return await this.txn.update(ref._raw, data)
   }
 }
 

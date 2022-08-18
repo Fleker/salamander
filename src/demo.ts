@@ -24,11 +24,11 @@ async function __demo() {
   await ref.update<DemoInterface>({})
 
   db.runTransaction(async t => {
-    const tuser = await t.get<DemoInterface>(ref._raw)
+    const tuser = await t.get<DemoInterface>(ref)
     const tdata = tuser.data()
     tdata.required = false
 
-    t.update<DemoInterface>(ref._raw, tdata)
+    t.update<DemoInterface>(ref, tdata)
   })
 
   const search = await users.where('field', '==', 'query').get<DemoInterface>()
