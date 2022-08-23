@@ -1,8 +1,9 @@
 {
   "name": "@fleker/salamander",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A type-safe wrapper for Firestore operations",
   "main": "lib/index.js",
+  "types": "src/index.ts",
   "author": "Nick Felker",
   "license": "Apache-2.0",
   "scripts": {
