@@ -39,7 +39,7 @@ class SalamanderCollection {
     this.query = this.collection
   }
 
-  async add<T>(data: T) {
+  async add<T extends admin.firestore.DocumentData>(data: T) {
     return this.collection.add(data)
   }
 
@@ -100,11 +100,11 @@ export class SalamanderRef {
     return new SalamanderCollection(this.ref.collection(subCollection))
   }
 
-  async create<T>(data: T): Promise<void> {
+  async create<T extends admin.firestore.DocumentData>(data: T): Promise<void> {
     await this.ref.create(data)
   }
 
-  async get<T>(): Promise<SalamanderSnapshot<T>> {
+  async get<T extends admin.firestore.DocumentData>(): Promise<SalamanderSnapshot<T>> {
     const doc = await this.ref.get()
     return new SalamanderSnapshot(doc)
   }
@@ -114,11 +114,11 @@ export class SalamanderRef {
     return this
   }
 
-  async set<T>(data: T): Promise<unknown> {
+  async set<T extends admin.firestore.DocumentData>(data: T): Promise<unknown> {
     return await this.ref.set(data)
   }
 
-  async update<T>(data: Partial<T>): Promise<unknown> {
+  async update<T extends admin.firestore.DocumentData>(data: Partial<T>): Promise<unknown> {
     return await this.ref.update(data)
   }
 }
@@ -134,7 +134,7 @@ export class SalamanderTxn {
     return this.txn
   }
 
-  async create<T>(data: T): Promise<SalamanderSnapshot<T>> {
+  async create<T extends admin.firestore.DocumentData>(data: T): Promise<SalamanderSnapshot<T>> {
     return this.create(data)
   }
 
@@ -142,21 +142,21 @@ export class SalamanderTxn {
     return this.txn.delete(ref._raw)
   }
 
-  async get<T>(ref: SalamanderRef): Promise<SalamanderSnapshot<T>> {
+  async get<T extends admin.firestore.DocumentData>(ref: SalamanderRef): Promise<SalamanderSnapshot<T>> {
     const doc = await this.txn.get(ref._raw)
     return new SalamanderSnapshot<T>(doc)
   }
 
-  async getAll<T>(...documentRefsOrReadOptions: (FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData> | FirebaseFirestore.ReadOptions)[]) {
+  async getAll<T extends admin.firestore.DocumentData>(...documentRefsOrReadOptions: (FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData> | FirebaseFirestore.ReadOptions)[]) {
     const docs = await this.txn.getAll(...documentRefsOrReadOptions)
     return docs.map((doc: FirebaseFirestore.DocumentSnapshot<T>) => new SalamanderSnapshot<T>(doc))
   }
 
-  async set<T>(ref: SalamanderRef, data: T): Promise<unknown> {
+  async set<T extends admin.firestore.DocumentData>(ref: SalamanderRef, data: T): Promise<unknown> {
     return await this.txn.set(ref._raw, data)
   }
 
-  async update<T>(ref: SalamanderRef, data: Partial<T>): Promise<unknown> {
+  async update<T extends admin.firestore.DocumentData>(ref: SalamanderRef, data: Partial<T>): Promise<unknown> {
     return await this.txn.update(ref._raw, data)
   }
 }
