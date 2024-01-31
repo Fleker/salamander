@@ -156,7 +156,7 @@ export class SalamanderTxn {
     return await this.txn.set(ref._raw, data)
   }
 
-  async update<T extends admin.firestore.UpdateData>(ref: SalamanderRef, data: Partial<T>): Promise<unknown> {
+  async update<T extends admin.firestore.UpdateData<any>>(ref: SalamanderRef, data: Partial<T>): Promise<unknown> {
     return await this.txn.update(ref._raw, data)
   }
 }
@@ -225,7 +225,7 @@ export class SalamanderSnapshot<T> {
   }
 
   get ref() {
-    return this.snapshot.ref
+    return new SalamanderRef(this.snapshot.ref)
   }
 
   data() {
