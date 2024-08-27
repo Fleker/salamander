@@ -39,6 +39,10 @@ class SalamanderCollection {
     this.query = this.collection
   }
 
+  get _raw() {
+    return this.ref
+  }
+
   async add<T extends admin.firestore.DocumentData>(data: T) {
     return this.collection.add(data)
   }
