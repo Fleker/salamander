@@ -134,8 +134,8 @@ export class SalamanderTxn {
     return this.txn
   }
 
-  async create<T extends admin.firestore.DocumentData>(data: T): Promise<SalamanderSnapshot<T>> {
-    return this.create(data)
+  async create<T extends admin.firestore.DocumentData>(ref: SalamanderCollection, data: T): Promise<SalamanderSnapshot<T>> {
+    return this.txn.create(ref._raw, data)
   }
 
   async delete(ref: SalamanderRef) {
