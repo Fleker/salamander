@@ -1,6 +1,6 @@
 {
   "name": "@fleker/salamander",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A type-safe wrapper for Firestore operations",
   "main": "lib/index.js",
   "types": "src/index.ts",
