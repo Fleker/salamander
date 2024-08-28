@@ -40,7 +40,11 @@ class SalamanderCollection {
   }
 
   get _raw() {
-    return this.ref
+    return this.collection
+  }
+
+  get _ref() {
+    return this.collection as unknown as FirebaseFirestore.DocumentReference
   }
 
   async add<T extends admin.firestore.DocumentData>(data: T) {
@@ -138,8 +142,9 @@ export class SalamanderTxn {
     return this.txn
   }
 
-  async create<T extends admin.firestore.DocumentData>(ref: SalamanderCollection, data: T): Promise<SalamanderSnapshot<T>> {
-    return this.txn.create(ref._raw, data)
+  async create<T extends admin.firestore.DocumentData>(ref: SalamanderCollection, data: T): Promise<SalamanderTxn> {
+    this.txn.create(ref._ref, data)
+    return this
   }
 
   async delete(ref: SalamanderRef) {
